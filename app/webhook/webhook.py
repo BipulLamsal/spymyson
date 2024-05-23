@@ -10,8 +10,8 @@ bot = BotHandler().bot
 @bot.message_handler(commands=['info'])
 def send_welcome(message):
     bot.reply_to(message, ("Hi there I am spymyson\n"
-                           "periodically screenshot screen"
-                           "and dumps over here.\n"
+                           "connect to the desktop client"
+                           "and dumps necessary files over here.\n"
                            "might be helpful to track your productivity "
                            "whole day or spy dark side of your mom"))
 
