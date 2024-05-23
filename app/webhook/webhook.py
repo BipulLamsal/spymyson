@@ -1,10 +1,10 @@
 import telebot
 from flask import request, Response, json, Blueprint, abort
-from app.config.config import Config
+from app.utils.bothandler import BotHandler  
+
 hook = Blueprint("hook", __name__)
 
-BOT_TOKEN = Config().BOT_TOKEN 
-bot = telebot.TeleBot(BOT_TOKEN)
+bot = BotHandler().bot 
 
 # handling commands
 @bot.message_handler(commands=['info'])

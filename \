@@ -51,7 +51,7 @@ def process_request(file,token):
     elif file_type == FileType.IMAGE: 
         # TODO skip the file greater than MAX_IMAGE_SIZE
         file.save(server_file_name)
-        try:
+                try:
             response = BotHandler().send_photo(token, server_file_name)
         except (BadRequest, Unauthorized, TelegramError) as e:
             response = failure_response_builder(500, f"Failed to send photo: {e}")
@@ -61,10 +61,7 @@ def process_request(file,token):
     elif file_type == FileType.DOCUMENT:
         # TODO skip the file greater than MAX_DOCUMENT_SIZE
         file.save(server_file_name)
-        try:
-            response = BotHandler().send_document(token, server_file_name)
-        except (BadRequest, Unauthorized, TelegramError) as e:
-            response = failure_response_builder(500, f"Failed to send photo: {e}")
-        finally:
-            os.remove(server_file_name)
+        response = BotHandler().send_document(token,server_file_name)
+        os.remove(server_file_name)
+    
     return response
