@@ -6,7 +6,7 @@ from app.utils.response import failure_response_builder, success_response_builde
 
 bot = Blueprint("bot", __name__)
 
-@bot.route('/hello', methods=["GET"])
+@bot.route('/', methods=["GET"])
 def say_hello_world():
     return success_response_builder(200, "Hello world")
 
