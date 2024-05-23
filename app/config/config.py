@@ -7,6 +7,6 @@ class Config:
     def __init__(self):
         self.dev_config = DevConfig()
         self.production_config = ProductionConfig()
-        self.UPLOAD = 'app/uploads/'
+        self.UPLOAD = 'tmp/uploads/'
         self.BOT_TOKEN = os.getenv('BOT_TOKEN')
 
