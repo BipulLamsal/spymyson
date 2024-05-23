@@ -2,6 +2,7 @@ import os
 from enum import Enum
 from app.utils.response import success_response_builder, failure_response_builder 
 from app.utils.bothandler import BotHandler
+from app.config.config import Config
 from werkzeug.utils import secure_filename
 
 class FileType(Enum):
@@ -9,7 +10,7 @@ class FileType(Enum):
     DOCUMENT = "DOCUMENT"
     NONE = "NONE"
 
-UPLOAD_FOLDER = 'app/uploads/'
+UPLOAD_FOLDER = Config().UPLOAD 
 
 ALLOWED_IMAGE_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'svg'}
 ALLOWED_DOCUMENT_EXTENSIONS = {'pdf', 'doc', 'txt', 'docx', 'ppt', 'pptx'}
