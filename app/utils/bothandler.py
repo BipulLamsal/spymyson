@@ -7,10 +7,9 @@ class BotHandler():
         BOT_TOKEN = Config().BOT_TOKEN 
         self.bot = telebot.TeleBot(BOT_TOKEN)
     
-    def send_photo(self,chat_id,file_path):
+    def send_photo(self,chat_id,file):
         try:
-            with open(file_path, 'rb') as photo:  
-                self.bot.send_photo(chat_id, photo)
+                self.bot.send_photo(chat_id, file)
                 return success_response_builder(200,"Sent photo to the telegram account")
         
         except ApiException as e:
@@ -21,10 +20,9 @@ class BotHandler():
             else:
                 return failure_response_builder(500, f"TelegramError: {e.result_json['description']} - An error occurred while sending the photo to chat_id: {chat_id}")
     
-    def send_document(self,chat_id,file_path):
-        try:
-            with open(file_path, 'rb') as document:
-                self.bot.send_document(chat_id,document)
+    def send_document(self,chat_id,file):
+        try: 
+                self.bot.send_document(chat_id,file)
                 return success_response_builder(200,"Sent document to the telegram account")
         
         except ApiException as e:

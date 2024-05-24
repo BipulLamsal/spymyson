@@ -10,17 +10,13 @@ class FileType(Enum):
     DOCUMENT = "DOCUMENT"
     NONE = "NONE"
 
-UPLOAD_FOLDER = Config().UPLOAD 
+# UPLOAD_FOLDER = Config().UPLOAD 
 
 ALLOWED_IMAGE_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'svg'}
 ALLOWED_DOCUMENT_EXTENSIONS = {'pdf', 'doc', 'txt', 'docx', 'ppt', 'pptx'}
 
-MAX_IMAGE_SIZE = 10000;
-MAX_DOCUMENT_SIZE = 50000;
-
-
-if not os.path.exists(UPLOAD_FOLDER):
-    os.makedirs(UPLOAD_FOLDER)
+MAX_IMAGE_SIZE = 10000000;
+MAX_DOCUMENT_SIZE = 50000000;
 
 def allowed_file_type(filename):
     if not filename:
@@ -42,30 +38,25 @@ def is_valid_doc_size(content_length):
         return False
     return True
 
-def process_request(file,token):
+def process_request(file,file_size,token):
     file_type = allowed_file_type(file.filename);
-    server_file_name = os.path.join(UPLOAD_FOLDER, secure_filename(file.filename))
     response = failure_response_builder(403, "Invalid file type")
     if file_type == FileType.NONE:
         return response
     
-    elif file_type == FileType.IMAGE: 
-        # TODO skip the file greater than MAX_IMAGE_SIZE
-        file.save(server_file_name)
+    elif file_type == FileType.IMAGE:
+        if (file_size > MAX_IMAGE_SIZE):
+            return failure_response_builder(413, "Image cannot excedd 10 MB")
         try:
-            response = BotHandler().send_photo(token, server_file_name)
+            response = BotHandler().send_photo(token, file)
         except (BadRequest, Unauthorized, TelegramError) as e:
             response = failure_response_builder(500, f"Failed to send photo: {e}")
-        finally:
-            os.remove(server_file_name)
 
     elif file_type == FileType.DOCUMENT:
-        # TODO skip the file greater than MAX_DOCUMENT_SIZE
-        file.save(server_file_name)
+        if (file_size > MAX_DOCUMENT_SIZE):
+            return failure_response_builder(413, "Image cannot exceed 50 MB")
         try:
-            response = BotHandler().send_document(token, server_file_name)
+            response = BotHandler().send_document(token, file)
         except (BadRequest, Unauthorized, TelegramError) as e:
             response = failure_response_builder(500, f"Failed to send photo: {e}")
-        finally:
-            os.remove(server_file_name)
     return response

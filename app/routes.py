@@ -23,8 +23,7 @@ def upload_file():
 
     if not request.headers.get('Authorization'):
         return failure_response_builder(400,"No token provided")
-
     file = request.files["file"]
     token = request.headers.get('Authorization')
-    return process_request(file,token)
+    return process_request(file,request.content_length,token)
 
