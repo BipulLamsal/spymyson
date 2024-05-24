@@ -71,6 +71,33 @@ body {
   height: 8pc;
 }
 .hidden {
-
   display: none;
+}
+@media (max-width: 725px) {
+  .container{
+    margin: 0px 10px;
+
+  }
+  .secondary-container h1,
+  .display-container h1 {
+    font-size: 2em;
+  }
+  
+  .secondary-container p,
+  .display-container p {
+    font-size: 1em;
+  }
+  
+  .secondary-container button,
+  .display-container button {
+    font-size: 1em;
+  }
+  
+  .footer img {
+    height: 5pc;
+  }
+  .seperated {
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
 }
