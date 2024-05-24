@@ -1,10 +1,14 @@
 import os
-from flask import request, Blueprint
+from flask import request, Blueprint, render_template
 from app.utils.filehandler import allowed_file_type,FileType,process_request  
 from app.utils.response import failure_response_builder, success_response_builder
 
 
 bot = Blueprint("bot", __name__)
+initial = Blueprint('initial',__name__)
+@initial.route('/')
+def index():
+    return render_template('index.html')
 
 @bot.route('/', methods=["GET"])
 def say_hello_world():
@@ -26,4 +30,5 @@ def upload_file():
     file = request.files["file"]
     token = request.headers.get('Authorization')
     return process_request(file,request.content_length,token)
+
 
