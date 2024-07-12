@@ -28,7 +28,7 @@ def upload_file():
     token = request.headers.get('Authorization')
     text = request.form.get("message")
 
-    if 'file' not in request.files or not text:
+    if 'file' not in request.files and not text:
         return failure_response_builder(400, "No image or message provided")
 
     if text:
