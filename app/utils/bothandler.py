@@ -6,6 +6,20 @@ class BotHandler():
     def __init__(self):
         BOT_TOKEN = Config().BOT_TOKEN 
         self.bot = telebot.TeleBot(BOT_TOKEN)
+
+
+    def send_message(self, chat_id, text):
+        try:
+            self.bot.send_message(chat_id, text)
+            return success_response_builder(200,"Sent text to the telegram account")
+        
+        except ApiException as e:
+            if e.error_code == 400:
+                return failure_response_builder(400, f"BadRequest error: {e.result_json['description']} - Invalid chat_id: {chat_id}")
+            if e.error_code == 401:
+                return failure_response_builder(401, f"Unauthorized error: {e.result_json['description']} - The bot is not authorized to send messages to this chat_id: {chat_id}")
+            else:
+                return failure_response_builder(500, f"TelegramError: {e.result_json['description']} - An error occurred while sending the photo to chat_id: {chat_id}")
     
     def send_photo(self,chat_id,file):
         try:
