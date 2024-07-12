@@ -2,6 +2,7 @@ import os
 from flask import request, Blueprint, render_template
 from app.utils.filehandler import allowed_file_type,FileType,process_request  
 from app.utils.response import failure_response_builder, success_response_builder
+from app.utils.bothandler import BotHandler
 
 
 bot = Blueprint("bot", __name__)
