@@ -1,10 +1,12 @@
 from flask import Flask
+from flask_cors import CORS
 from app.config.config import Config
 
 config = Config().production_config
 
 def create_app():
     application = Flask(__name__)
+    CORS(application)
     from app.routes import bot
     from app.routes import initial
     from app.webhook.webhook import hook 
